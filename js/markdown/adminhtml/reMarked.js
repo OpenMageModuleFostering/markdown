@@ -2,7 +2,7 @@
 * Copyright (c) 2013, Leon Sorokin
 * All rights reserved. (MIT Licensed)
 *
-* reMarked.js - DOM > markdown
+* reMarked.js - HTML > markdown
 */
 
 reMarked = function(opts) {
@@ -13,9 +13,9 @@ reMarked = function(opts) {
 	//  link_near:					// cite links immediately after blocks
 		h1_setext:	true,			// underline h1 headers
 		h2_setext:	true,			// underline h2 headers
-		h_atx_suf:	false,			// header suffix (###)
+		h_atx_suf:	false,			// header suffixes (###)
 	//	h_compact:	true,			// compact headers (except h1)
-		gfm_code:	false,			// render code blocks as via ``` delims
+		gfm_code:	false,			// gfm code blocks (```)
 		li_bullet:	"*-+"[0],		// list item bullet style
 	//	list_indnt:					// indent top-level lists
 		hr_char:	"-_*"[0],		// hr style
@@ -27,6 +27,7 @@ reMarked = function(opts) {
 		tbl_edges:	false,			// show side edges on tables
 		hash_lnks:	false,			// anchors w/hash hrefs as links
 		br_only:	false,			// avoid using "  " as line break indicator
+		col_pre:	"col ",			// column prefix to use when creating missing headers for tables
 	//	comp_style: false,			// use getComputedStyle instead of hardcoded tag list to discern block/inline
 		unsup_tags: {				// handling of unsupported tags, defined in terms of desired output style. if not listed, output = outerHTML
 			// no output
@@ -41,12 +42,10 @@ reMarked = function(opts) {
 			block1c: "dt dd caption legend figcaption output",
 			// eg: "\n\n<tag>some content</tag>"
 			block2c: "canvas audio video iframe",
-		/*	// direct remap of unsuported tags
-			convert: {
-				i: "em",
-				b: "strong"
-			}
-		*/
+		},
+		tag_remap: {				// remap of variants or deprecated tags to internal classes
+			"i": "em",
+			"b": "strong"
 		}
 	};
 
@@ -94,8 +93,8 @@ reMarked = function(opts) {
 
 		var buf = "<" + tag;
 
-		for (var attr, i=0, attrs=e.attributes, l=attrs.length; i<l; i++) {
-			attr = attrs.item(i);
+		for (var attr, i = 0; i < e.attributes.length; i++) {
+			attr = e.attributes.item(i);
 			buf += " " + attr.nodeName + '="' + attr.nodeValue + '"';
 		}
 
@@ -159,14 +158,14 @@ reMarked = function(opts) {
 			re += "\n\n";
 			var maxlen = 0;
 			// get longest link href with title, TODO: use getAttribute?
-			for (var y in links) {
+			for (var y = 0; y < links.length; y++) {
 				if (!links[y].e.title) continue;
 				var len = links[y].e.href.length;
 				if (len && len > maxlen)
 					maxlen = len;
 			}
 
-			for (var k in links) {
+			for (var k = 0; k < links.length; k++) {
 				var title = links[k].e.title ? rep(" ", (maxlen + 2) - links[k].e.href.length) + '"' + links[k].e.title + '"' : "";
 				re += "  [" + (+k+1) + "]: " + (nodeName(links[k].e) == "a" ? links[k].e.href : links[k].e.src) + title + "\n";
 			}
@@ -199,11 +198,43 @@ reMarked = function(opts) {
 				// inline elems allowing adjacent whitespace text nodes to be rendered
 				var inlRe = cfg.unsup_tags.inline, n, name;
 
+				// if no thead exists, detect header rows or make fake cols
+				if (nodeName(this.e) == "table") {
+					if (this.e.hasChildNodes() && !this.e.tHead) {
+						var thead = document.createElement("thead");
+
+						var tbody0 = this.e.tBodies[0],
+							row0 = tbody0.rows[0],
+							cell0 = row0.cells[0];
+
+						if (nodeName(cell0) == "th")
+							thead.appendChild(row0);
+						else {
+							var hcell,
+								i = 0,
+								len = row0.cells.length,
+								hrow = thead.insertRow();
+
+							while (i++ < len) {
+								hcell = document.createElement("th");
+								hcell.textContent = cfg.col_pre + i;
+								hrow.appendChild(hcell);
+							}
+						}
+
+						this.e.insertBefore(thead, tbody0);
+					}
+				}
+
 				for (i in this.e.childNodes) {
 					if (!/\d+/.test(i)) continue;
 
 					n = this.e.childNodes[i];
 					name = nodeName(n);
+
+					// remap of variants
+					if (name in cfg.tag_remap)
+						name = cfg.tag_remap[name];
 
 					// ignored tags
 					if (cfg.unsup_tags.ignore.test(name))
@@ -264,11 +295,9 @@ reMarked = function(opts) {
 		rendK: function()
 		{
 			var n, buf = "";
-			for (var i in this.c) {
+			for (var i = 0; i < this.c.length; i++) {
 				n = this.c[i];
-
-                // @SchumacherFM: added typeof n.rend
-				buf += (n.bef || "") +( typeof n.rend === 'function' ? n.rend() : '' ) + (n.aft || "");
+				buf += (n.bef || "") + n.rend() + (n.aft || "");
 			}
 			return buf.replace(/^\n+|\n+$/, "");
 		}
@@ -311,7 +340,7 @@ reMarked = function(opts) {
 			if (this.p instanceof lib.li) {
 				var repl = null, spcs = kids.match(/^[\t ]+/gm);
 				if (!spcs) return kids;
-				for (var i in spcs) {
+				for (var i = 0; i < spcs.length; i++) {
 					if (repl === null || spcs[i][0].length < repl.length)
 						repl = spcs[i][0];
 				}
@@ -512,9 +541,9 @@ reMarked = function(opts) {
 			},
 			rend: function() {
 				// run prep on all cells to get max col widths
-				for (var tsec in this.c)
-					for (var row in this.c[tsec].c)
-						for (var cell in this.c[tsec].c[row].c)
+				for (var tsec = 0; tsec < this.c.length; tsec++)
+					for (var row = 0; row < this.c[tsec].c.length; row++)
+						for (var cell = 0; cell < this.c[tsec].c[row].c.length; cell++)
 							this.c[tsec].c[row].c[cell].prep();
 
 				return this.supr();
@@ -524,7 +553,7 @@ reMarked = function(opts) {
 		lib.thead = cfg.gfm_tbls ? lib.cblk.extend({
 			wrap: ["\n", function(kids) {
 				var buf = "";
-				for (var i in this.p.cols) {
+				for (var i = 0; i < this.p.cols.length; i++) {
 					var col = this.p.cols[i],
 						al = col.a[0] == "c" ? ":" : " ",
 						ar = col.a[0] == "r" || col.a[0] == "c" ? ":" : " ";
@@ -582,7 +611,7 @@ reMarked = function(opts) {
 				col.w = Math.max(col.w || 0, this.guts.length);
 				if (this.e.align)
 					col.a = this.e.align;
-			}
+			},
 		}) : lib.ctblk.extend();
 
 			lib.td = lib.th.extend();
