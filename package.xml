@@ -1,30 +1,33 @@
 <?xml version="1.0"?>
 <package>
     <name>markdown</name>
-    <version>1.4.2</version>
+    <version>2.0.0</version>
     <stability>stable</stability>
-    <license uri="https://github.com/SchumacherFM/Magento-Markdown">Custom</license>
+    <license uri="https://github.com/SchumacherFM/Magento-Markdown">BSD-3-Clause</license>
     <channel>community</channel>
     <extends/>
     <summary>Mage Markdown as module for Magento! Replaces the TinyMCE editor. Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).</summary>
-    <description>Mage Markdown is a text-to-HTML conversion tool for web writers. Markdown allows you to write using an easy-to-read, easy-to-write plain text format, then convert it to structurally valid XHTML (or HTML).&#xD;
+    <description>Markdown is a text-to-HTML conversion tool for web writers. Markdown&#xD;
+allows you to write using an easy-to-read, easy-to-write plain text&#xD;
+format, then convert it to structurally valid XHTML (or HTML).&#xD;
 &#xD;
-Full documentation of Markdown's syntax is available on John's Markdown page: http://daringfireball.net/projects/markdown/&#xD;
-&#xD;
-Full support of Markdown Extra: http://michelf.ca/projects/php-markdown/extra/&#xD;
-&#xD;
-This module renders all CMS pages and CMS blocks.&#xD;
-&#xD;
-Rendering of catalog description fields have to be implemented in the phtml files by yourself.&#xD;
-&#xD;
-Preview in the backend. Live preview available in CMS Pages.&#xD;
+- Full support of Markdown Extra&#xD;
+- Renders all CMS pages and all CMS blocks (Mage_Cms_Block_Block and Mage_Cms_Block_Widget_Block)&#xD;
+- Renders every transactional email as Markdown (or MD Extra)&#xD;
+- Rendering of catalog product and category short and long description fields have to be implemented in the phtml files by yourself.&#xD;
+- Integrates the awesome http://epiceditor.com: split fullscreen editing, live previewing, automatic draft saving and offline support.&#xD;
+- Drag'n'Drop of images supported in textarea fields.  Automatic image uploading integrated (&gt;=&#xD;
+ IE10, Safari 6.0.2, FX3.6, Chrome 7, Opera 12.02)&#xD;
+- Converting of HTML into Markdown. Client side via JavaScript.&#xD;
 &#xD;
 For further information please see the github repository: https://github.com/SchumacherFM/Magento-Markdown</description>
-    <notes>https://github.com/SchumacherFM/Magento-Markdown</notes>
+    <notes>https://github.com/SchumacherFM/Magento-Markdown&#xD;
+&#xD;
+Tons of new features! See the github pages for the version history.</notes>
     <authors><author><name>Cyrill Schumacher</name><user>cyrills</user><email>cyrill@schumacher.fm</email></author></authors>
-    <date>2013-09-11</date>
-    <time>09:03:12</time>
-    <contents><target name="magecommunity"><dir name="SchumacherFM"><dir name="Markdown"><dir><dir name="Helper"><file name="Data.php" hash="35789036d57008a39effa53ed597d737"/></dir><dir name="Model"><dir name="Editor"><file name="Config.php" hash="44c6244ec440e8150778079cd184e5de"/><file name="Observer.php" hash="ad29b486cbe198b89e04db266d10c16b"/></dir><dir name="Markdown"><file name="Abstract.php" hash="496f33e550c20301a8a4c62c5cbf35a2"/><file name="Interface.php" hash="05df0ecf7a7c6bc09481f213cdc98255"/><file name="Observer.php" hash="e357583f380bcc925cc663d44f6120da"/><file name="Render.php" hash="df0addc5cfbd8d805c0b8a1661bbd496"/></dir><dir name="Michelf"><dir name="Markdown"><file name="Extra.php" hash="aaee7a66298007f8c003ba96d53deab9"/><file name="TmpImpl.php" hash="5ec68c28519d8ecb4a43324f5f197a80"/></dir><file name="Markdown.php" hash="76219ba32f37cad14755c8613b390c83"/></dir><dir name="Observer"><file name="AdminhtmlBlock.php" hash="50f7c3f848f847ef7b35206f7f48914f"/></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="MarkdownController.php" hash="9a7e8a64624159af49a18ad135d721ae"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="1f4034751ea0e0eece21d0015ee95e1a"/><file name="config.xml" hash="e398afbbb64dc97de74baf605ebc64fc"/><file name="system.xml" hash="0cee296bcf061251c7eab51dfefe224f"/></dir><dir name="sql"><dir name="markdown_setup"><file name="install-1.0.0.php" hash="0fe5a9650dd224f691caf585a34c52e6"/></dir></dir></dir><file name=".DS_Store" hash="29236c1e2932a8a54035bfbe9e734f49"/></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="markdown.xml" hash="ceece632ae2ebda2c33f7a7a37f9d7d2"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="SchumacherFM_Markdown.xml" hash="db8742448ef30a5af1bd60865f429c26"/></dir></target><target name="magelocale"><dir><dir name="de_DE"><file name="SchumacherFM_Markdown.csv" hash="d41d8cd98f00b204e9800998ecf8427e"/></dir><dir name="en_US"><file name="SchumacherFM_Markdown.csv" hash="d41d8cd98f00b204e9800998ecf8427e"/></dir></dir></target><target name="mage"><dir name="js"><dir name="mage"><dir name="adminhtml"><file name="markdown.js" hash="62a8ef8105db7defd76fa9f8bca6bfce"/><file name="marked.js" hash="5dbb480da6528c11cd99f3d17cc6aad5"/></dir></dir></dir></target><target name="mageskin"><dir name="adminhtml"><dir name="default"><dir name="default"><file name="markdown.css" hash="68699f62ea8666484819346ff143ee88"/></dir></dir></dir></target></contents>
+    <date>2013-10-13</date>
+    <time>07:21:10</time>
+    <contents><target name="magecommunity"><dir name="SchumacherFM"><dir name="Markdown"><dir><dir name="Helper"><file name="Data.php" hash="56a3abd176deb0f2318bd4c6be98f950"/></dir><dir name="Model"><dir name="Editor"><file name="Observer.php" hash="0683e4ed2e97c9efbabea6aad92c1f44"/></dir><dir name="Markdown"><file name="Abstract.php" hash="237784e5f749406fca86e88172cab2ea"/><file name="Interface.php" hash="05df0ecf7a7c6bc09481f213cdc98255"/><file name="Observer.php" hash="2d8d754cf465bb3a85cd826a11074d0a"/><file name="Render.php" hash="df0addc5cfbd8d805c0b8a1661bbd496"/></dir><dir name="Michelf"><dir name="Markdown"><file name="Extra.php" hash="aaee7a66298007f8c003ba96d53deab9"/><file name="TmpImpl.php" hash="5ec68c28519d8ecb4a43324f5f197a80"/></dir><file name="Markdown.php" hash="76219ba32f37cad14755c8613b390c83"/></dir><dir name="Observer"><dir name="Adminhtml"><file name="Block.php" hash="efe852cb712631d2bdeb56ed4be02a48"/><file name="EpicEditor.php" hash="ac01b829d5ad29c2c5412ace1448b194"/><file name="LayoutUpdate.php" hash="a01b599ebed057f9a99266cb91441a99"/></dir></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="MarkdownController.php" hash="d8180e18071016883615d8f727a3300e"/></dir></dir><dir name="etc"><file name="adminhtml.xml" hash="27c358363c32632f51affbecae3a24a0"/><file name="config.xml" hash="5e48b57a0fd5cf6b1665c4696ccadf22"/><file name="system.xml" hash="d31cf185d664c7f3424214ebc5239aaf"/></dir><dir name="sql"><dir name="markdown_setup"><file name="install-1.0.0.php" hash="0fe5a9650dd224f691caf585a34c52e6"/></dir></dir></dir><file name=".DS_Store" hash="29236c1e2932a8a54035bfbe9e734f49"/></dir></dir></target><target name="magedesign"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="layout"><file name="markdown.xml" hash="5f073545b849100ed7c1f1ba1685fb4b"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="SchumacherFM_Markdown.xml" hash="db8742448ef30a5af1bd60865f429c26"/></dir></target><target name="magelocale"><dir><dir name="de_DE"><file name="SchumacherFM_Markdown.csv" hash="d41d8cd98f00b204e9800998ecf8427e"/></dir><dir name="en_US"><file name="SchumacherFM_Markdown.csv" hash="d41d8cd98f00b204e9800998ecf8427e"/></dir></dir></target><target name="mage"><dir name="js"><dir name="markdown"><dir><dir name="adminhtml"><file name="epiceditor.js" hash="5c29b9d4d25d897ba63e9109ba6e3564"/><file name="filereader.js" hash="3ed749a9b0843d0911b41f8be26364fa"/><dir name="highlight"><dir name="styles"><file name="xcode.css" hash="d99d394b8a22d59c8546f84b683dc648"/></dir></dir><file name="highlight.pack.js" hash="b60b28a732e22d75e690bc32d8606354"/><file name="markdown.js" hash="ac58ac234a377e3b3a4e2cab828268d7"/><file name="marked.js" hash="8af08dcb5d207265f604dce4c250e6ec"/><file name="reMarked.js" hash="9adbec6c65fb488a754103e63b94ad58"/></dir></dir></dir></dir></target><target name="mageskin"><dir name="adminhtml"><dir name="default"><dir name="default"><dir name="markdown"><file name="mdm.css" hash="19b49b67b9b52b25f5f7d2106cc73892"/></dir><dir name="epiceditor"><dir><dir name="highlight"><dir name="styles"><file name="default.css" hash="05519f4875102535137ef0141f26864b"/><file name="github.css" hash="ca6ea80f87a205fdf919439bad4c27db"/><file name="googlecode.css" hash="a4c13deaf6eeb2858cf7b0b300992cab"/></dir></dir><dir name="themes"><dir name="base"><file name="epiceditor.css" hash="72d9ff0a1296bf28b815d696129bb086"/></dir><dir name="editor"><file name="epic-dark.css" hash="872c9540cedbf5cdf69ca2b0accb3cef"/><file name="epic-light.css" hash="68d9441f297c73180dd83545ee70117a"/></dir><dir name="preview"><file name="bartik.css" hash="a8a3efffd02c3acf6e3dc62ee5e92936"/><file name="github.css" hash="6085b7303f9a3c3cc3d2d8039487bf5d"/><file name="githubNxcode.css" hash="c5639fe4cd88f0416c15892f2f9b90b2"/><file name="preview-dark.css" hash="660b85886b844d592e2c722937b438e1"/></dir></dir></dir></dir></dir></dir></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
 </package>
